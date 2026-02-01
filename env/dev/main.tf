@@ -5,3 +5,9 @@ module "ec2_vpc" {
   ami_id         = "ami-04b0f5834ea4c3e32"
   instance_type  = "t3.micro"
 }
+module "ebs_s3_mod" {
+  source      = "../modules/ebs_s3_mod"
+  bucket_name = "vk-az"
+  az          = "ap-northeast-3a"
+  size        = 15
+}
