@@ -1,12 +1,4 @@
-terraform {
-  backend "s3" {
-    bucket         = "vk-az"
-    key            = "dev/terraform.tfstate"
-    region         = "ap-northeast-3"
-    dynamodb_table = "terraform-locks"
-    encrypt        = true
-  }
-}
+
 resource "aws_s3_bucket" "state_bucket" {
   bucket = var.bucket_name
   versioning {
