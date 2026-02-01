@@ -1,12 +1,4 @@
-terraform {
-  backend "s3" {
-    bucket         = "vk-az"
-    key            = "dev/terraform.tfstate"
-    region         = "ap-northeast-3"
-    dynamodb_table = "terraform-locks"
-    encrypt        = true
-  }
-}
+
 module "ec2_vpc" {
   source         = "../modules/ec2_vpc"
   vpc_cidr       = "10.0.0.0/16"
