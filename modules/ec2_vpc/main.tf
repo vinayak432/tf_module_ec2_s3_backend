@@ -1,24 +1,20 @@
-
-resource "aws_s3_bucket" "state_bucket" {
-  bucket = var.bucket_name
-  versioning {
-    enabled = true
-  }
+resource "aws_vpc" "this" {
+  cidr_block = var.vpc_cidr
+  tags = { Name = "app-vpc" }
 }
 
-resource "aws_dynamodb_table" "lock_table" {
-  name         = "terraform-locks"
-  billing_mode = "PAY_PER_REQUEST"
-  hash_key     = "LockID"
-
-  attribute {
-    name = "LockID"
-    type = "S"
-  }
+resource "aws_subnet" "public" {
+  vpc_id     = aws_vpc.this.id
+  cidr_block = var.subnet_cidr
+  map_public_ip_on_launch = true
 }
 
-resource "aws_ebs_volume" "data" {
-  availability_zone = var.az
-  size              = var.size
-  tags = { Name = "app-ebs" }
+resource "aws_instance" "app" {
+  ami           = var.ami_id
+  instance_type = var.instance_type
+  subnet_id     = aws_subnet.public.id
+
+  tags = {
+    Name = "app-ec2"
+  }
 }
