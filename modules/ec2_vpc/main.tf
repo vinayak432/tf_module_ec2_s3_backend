@@ -1,3 +1,12 @@
+terraform {
+  backend "s3" {
+    bucket         = "vk-az"
+    key            = "dev/terraform.tfstate"
+    region         = "ap-northeast-3"
+    dynamodb_table = "terraform-locks"
+    encrypt        = true
+  }
+}
 resource "aws_vpc" "this" {
   cidr_block = var.vpc_cidr
   tags = { Name = "app-vpc" }
